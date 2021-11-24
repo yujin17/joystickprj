@@ -9,18 +9,19 @@ TagManager:
   - ItemBox
   - Fire
   - Border
+  - Enemy
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - PlayerDamaged
   - Water
   - UI
   - Platform
   - ItemBox
   - Player
   - Fire
-  - 
+  - Enemy
   - 
   - 
   - 
