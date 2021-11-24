@@ -27,17 +27,17 @@ public class PlayerMove : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        //공격
         if(Input.GetKeyDown(KeyCode.X)&&AttackMode)
         {
             FireShot();
         }
+        //점프
         if (Input.GetButtonDown("Jump"))
         {
-            if (JumpCnt < 1)
-                rigid.AddForce(Vector2.up * JumPow, ForceMode2D.Impulse);
-            JumpCnt++;
-            anim.SetBool("isJump", true);
+            PlayerJum();
         }
+        //이동
         if (Input.GetButtonUp("Horizontal"))
         {
             rigid.velocity = new Vector2(rigid.velocity.normalized.x * 0.5f, rigid.velocity.y);
@@ -45,11 +45,7 @@ public class PlayerMove : MonoBehaviour
         //방향전환 
         if (Input.GetButton("Horizontal"))
         {
-            spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
-            if (Input.GetAxisRaw("Horizontal") == -1)
-                FireFlipX = -1;
-            else if (Input.GetAxisRaw("Horizontal") == 1)
-                FireFlipX = 1;
+            PlayerFilpX();
         }
         //애나메이션
         if (rigid.velocity.normalized.x == 0)
@@ -63,31 +59,9 @@ public class PlayerMove : MonoBehaviour
     }
     void FixedUpdate()
     {
-        float h = Input.GetAxisRaw("Horizontal");
+        Playermove();
 
-        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
-
-        if (rigid.velocity.x > Speed)
-        {
-            rigid.velocity = new Vector2(Speed, rigid.velocity.y);
-        }
-        else if (rigid.velocity.x < Speed * (-1))
-        {
-            rigid.velocity = new Vector2(Speed * (-1), rigid.velocity.y);
-        }
-
-        if (rigid.velocity.y < 0)
-        {
-            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
-            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform","ItemBox"));
-
-            if (rayHit.collider != null)
-            {
-                if (rayHit.distance < 1.5f)
-                    anim.SetBool("isJump", false);
-                JumpCnt = 0;
-            }
-        }
+        PlayerJumFall();
     }
     void OnCollisionEnter2D(Collision2D collision)
     {
@@ -95,6 +69,11 @@ public class PlayerMove : MonoBehaviour
         {
             AttackMode = true;
             Destroy(AttackItem);
+        }
+
+        if(collision.gameObject.tag=="Enemy")
+        {
+            PlayerOnDamaged(gameObject.transform.position);
         }
     }
 
@@ -107,6 +86,53 @@ public class PlayerMove : MonoBehaviour
         }
     }
 
+  
+    void Playermove()
+    {
+        float h = Input.GetAxisRaw("Horizontal");
+
+        rigid.AddForce(Vector2.right * h, ForceMode2D.Impulse);
+
+        if (rigid.velocity.x > Speed)
+        {
+            rigid.velocity = new Vector2(Speed, rigid.velocity.y);
+        }
+        else if (rigid.velocity.x < Speed * (-1))
+        {
+            rigid.velocity = new Vector2(Speed * (-1), rigid.velocity.y);
+        }
+    }
+    void PlayerFilpX()
+    {
+        spriteRenderer.flipX = Input.GetAxisRaw("Horizontal") == -1;
+        if (Input.GetAxisRaw("Horizontal") == -1)
+            FireFlipX = -1;
+        else if (Input.GetAxisRaw("Horizontal") == 1)
+            FireFlipX = 1;
+    }
+    void PlayerJum()
+    {
+        if (JumpCnt < 1)
+            rigid.AddForce(Vector2.up * JumPow, ForceMode2D.Impulse);
+        JumpCnt++;
+        anim.SetBool("isJump", true);
+    }
+
+    void PlayerJumFall()
+    {
+        if (rigid.velocity.y < 0)
+        {
+            Debug.DrawRay(rigid.position, Vector3.down, new Color(0, 1, 0));
+            RaycastHit2D rayHit = Physics2D.Raycast(rigid.position, Vector3.down, 1, LayerMask.GetMask("Platform", "ItemBox"));
+
+            if (rayHit.collider != null)
+            {
+                if (rayHit.distance < 1.5f)
+                    anim.SetBool("isJump", false);
+                JumpCnt = 0;
+            }
+        }
+    }
     void FireShot()
     {
         GameObject fire = Instantiate(Fire, transform.position, Quaternion.Euler(0, 180, 0));
@@ -117,5 +143,32 @@ public class PlayerMove : MonoBehaviour
             rigid.AddForce(Vector2.left * 15f, ForceMode2D.Impulse);
 
         Destroy(fire, 5f);
+    }
+
+    void PlayerOnDamaged(Vector2 PlayerPos)
+    {
+        //change layer 
+        gameObject.layer = 3;
+        //view alpa
+        spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+        //보는 방향에 따른 피격시 튕기는 힘 방향조절 
+        if (FireFlipX == 1)
+        {
+            int dirc = transform.position.x - PlayerPos.x > 0 ? 1 : -1;
+            rigid.AddForce(new Vector2(dirc, 1) * 7, ForceMode2D.Impulse);
+        }
+        else
+        {
+            int dirc = transform.position.x + PlayerPos.x > 0 ? 1 : -1;
+            rigid.AddForce(new Vector2(dirc, 1) * 7, ForceMode2D.Impulse);
+        }
+        Invoke("PlayerOffDamaged", 1);
+
+    }
+    void PlayerOffDamaged()
+    {
+        gameObject.layer = 8;
+        spriteRenderer.color = new Color(1, 1, 1, 1);
+
     }
 }

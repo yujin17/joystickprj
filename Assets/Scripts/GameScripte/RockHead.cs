@@ -20,6 +20,16 @@ public class RockHead : MonoBehaviour
 
     }
 
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        //바닥에 닿으면 지형으로 변함
+        if(collision.gameObject.tag=="Platform")
+        {
+            gameObject.layer = 6;
+            gameObject.tag = "Platform";
+        }
+    }
+
     void RockHeadMove()
     {
         Vector2 downVec = new Vector2(rigid.position.x, rigid.position.y - 2f);
