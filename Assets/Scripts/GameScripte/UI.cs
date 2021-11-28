@@ -20,6 +20,7 @@ public class UI : MonoBehaviour
 
     public void OnClickPause()
     {
+        
         SceneManager.LoadScene("UIScene");
     }
 
