@@ -25,6 +25,10 @@ public class SPlant : MonoBehaviour
         GameObject Bullet = Instantiate(bullet, transform.position, transform.rotation);
         Rigidbody2D rigid = Bullet.GetComponent<Rigidbody2D>();
         rigid.AddForce(Vector2.left * 10,ForceMode2D.Impulse);
+        Destroy(Bullet, 2);
+
         Invoke("Fire", 2);
+
+
     }
 }

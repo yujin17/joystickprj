@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class RinoMove : MonoBehaviour
 {
-    public GameObject player;
+  //  public GameObject player;
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     public int nextmove;
@@ -29,17 +29,7 @@ public class RinoMove : MonoBehaviour
         if (rayHit.collider == null)
             Turn();
 
-        //박치기 raycast 
-        //Vector2 PlayerDetect = new Vector2(rigid.position.x + nextmove * 5f, rigid.position.y);
-        //Debug.DrawRay(PlayerDetect, Vector3.down, new Color(0, 1, 0));
-        //RaycastHit2D rayHitDectedPlayer = Physics2D.Raycast(PlayerDetect, Vector3.down, 1, LayerMask.GetMask("Player"));
-        //if(rayHitDectedPlayer.collider !=null)
-        //{
-        //    if (nextmove > 0)
-        //        rigid.AddForce(Vector2.right * 10f, ForceMode2D.Impulse);
-        //    else if (nextmove < 0)
-        //        rigid.AddForce(Vector2.left * 10f, ForceMode2D.Impulse);
-        //}
+       
 
 
         //박치기 원리 잘모르겠음 

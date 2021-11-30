@@ -415,19 +415,19 @@ GameObject:
   m_Component:
   - component: {fileID: 685415454}
   - component: {fileID: 685415453}
-  - component: {fileID: 685415452}
   - component: {fileID: 685415455}
   - component: {fileID: 685415456}
   - component: {fileID: 685415457}
-  m_Layer: 0
+  - component: {fileID: 685415452}
+  m_Layer: 10
   m_Name: standPlant
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!70 &685415452
-CapsuleCollider2D:
+--- !u!61 &685415452
+BoxCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -439,9 +439,19 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.2, y: -0.2}
-  m_Size: {x: 1.7, y: 2.6}
-  m_Direction: 0
+  m_Offset: {x: 0.2, y: -0.1}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 2.75, y: 2.625}
+    newSize: {x: 2.75, y: 2.625}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.4, y: 2.3}
+  m_EdgeRadius: 0
 --- !u!212 &685415453
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -501,7 +511,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 685415451}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 25.5, y: 4.8, z: 0}
+  m_LocalPosition: {x: 25.88, y: 4.79, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2403,7 +2413,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1772039927}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 15.62, y: 5.45, z: 0}
+  m_LocalPosition: {x: 43.31, y: 2.77, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -2421,7 +2431,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78f6d4f0c94835345929a195756d0929, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 928550044}
   nextmove: 1
 --- !u!50 &1772039933
 Rigidbody2D:
