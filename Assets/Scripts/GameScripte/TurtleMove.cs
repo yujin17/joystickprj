@@ -8,6 +8,7 @@ public class TurtleMove : MonoBehaviour
     SpriteRenderer spriteRenderer;
 
     public int nextmove;
+    //기본움직임, 맞으면 가시벗겨짐
     // Start is called before the first frame update
     void Awake()
     {
