@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+
+
 public class UI : MonoBehaviour
 {
-
+    //public GameObject pauseButton;
+    public GameObject playerGame;
+    public GameObject pauseMenuUI;
+    public GameObject pauseButton;
 
     // Start is called before the first frame update
-    void Start()
+    public void Start()
     {
         
     }
@@ -20,9 +25,47 @@ public class UI : MonoBehaviour
 
     public void OnClickPause()
     {
-        
+        pauseButton.SetActive(false);
+        pauseMenuUI.SetActive(true);
+        Time.timeScale = 0f;
+        GameObject.Find("Player").GetComponent<PlayerMove>().JumpCnt = 1;
+        //GameObject.Find("Player").GetComponent<PlayerMove>().flip = false;
+    }
+
+    public void OnClickClose()
+    {
+        pauseMenuUI.SetActive(false);
+        pauseButton.SetActive(true);
+        Time.timeScale = 1f;
+        GameObject.Find("Player").GetComponent<PlayerMove>().JumpCnt = 0;
+       // GameObject.Find("Player").GetComponent<PlayerMove>().flip = true;
+
+    }
+
+    public void OnClickResume()
+    {
+        pauseMenuUI.SetActive(false);
+        pauseButton.SetActive(true);
+        Time.timeScale = 1f;
+        GameObject.Find("Player").GetComponent<PlayerMove>().JumpCnt = 0;
+      //  GameObject.Find("Player").GetComponent<PlayerMove>().flip = true;
+
+    }
+
+    public void OnClickMenu()
+    {
+        Time.timeScale = 1f;
+        GameObject.Find("Player").GetComponent<PlayerMove>().JumpCnt = 0;
+      //  GameObject.Find("Player").GetComponent<PlayerMove>().flip = true;
         SceneManager.LoadScene("UIScene");
     }
 
-
+    public void OnClickQuit()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+        Application.Quit();
+#endif
+    }
 }
