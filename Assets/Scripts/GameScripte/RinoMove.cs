@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class RinoMove : MonoBehaviour
 {
-  //  public GameObject player;
+    //  public GameObject player;
+    Transform target = null;
+    float enemyMoveSpeed = 3f;
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     public int nextmove;
@@ -13,7 +15,16 @@ public class RinoMove : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-        Invoke("Think", 5);
+       // Invoke("Think", 5);
+    }
+
+    void Update()
+    {
+        if (target != null)
+        {
+            Vector2 dir = target.position - transform.position;
+            transform.Translate(dir.normalized * enemyMoveSpeed * Time.deltaTime);
+        }
     }
 
     // Update is called once per frame
@@ -43,8 +54,23 @@ public class RinoMove : MonoBehaviour
         //{
         //    transform.position = new Vector2(transform.position.x + (dir.x * velocity), transform.position.y);
         //}
+
     }
 
+     void OnTriggerEnter2D(Collider2D col)
+    {
+        if(col.gameObject.tag =="Player")
+        {
+            target=col.gameObject.transform;  //태그가 플레이어면 콜라이션의 게임오브젝트를 타겟에저장 
+            Debug.Log("target found");
+        }
+    }
+    void OnTriggerExit2D(Collider2D col)
+    {
+        target = null;
+        Debug.Log("target lost");
+    }
+   
 
     void Think()
     {
@@ -68,4 +94,5 @@ public class RinoMove : MonoBehaviour
         CancelInvoke();
         Invoke("Think", 5);
     }
+    
 }
