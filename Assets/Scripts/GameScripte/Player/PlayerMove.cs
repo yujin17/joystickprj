@@ -63,18 +63,35 @@ public class PlayerMove : MonoBehaviour
 
         PlayerJumFall();
     }
-    void OnCollisionEnter2D(Collision2D collision)
+    void OnCollisionEnter2D(Collision2D col)
     {
-        if(collision.gameObject.tag=="AttackItem")
+        //에너미 공격 
+        if (col.gameObject.tag == "Enemy")
+        {
+            if (rigid.velocity.y < 0 && transform.position.y > col.transform.position.y)
+            {
+                OnAttack(col.transform);
+            }
+            else //damaged
+            {
+                PlayerOnDamaged(col.transform.position);//충돌시 플레이어 포지션값넘김 
+            }
+        }
+        if(col.gameObject.tag=="TutleSpike")
+        {
+            PlayerOnDamaged(col.transform.position);
+        }
+
+        if (col.gameObject.tag=="AttackItem")
         {
             AttackMode = true;
             Destroy(AttackItem);
         }
 
-        if(collision.gameObject.tag=="Enemy")
-        {
-            PlayerOnDamaged(gameObject.transform.position);
-        }
+        //if(collision.gameObject.tag=="Enemy")
+        //{
+        //    PlayerOnDamaged(gameObject.transform.position);
+        //}
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -170,5 +187,23 @@ public class PlayerMove : MonoBehaviour
         gameObject.layer = 8;
         spriteRenderer.color = new Color(1, 1, 1, 1);
 
+    }
+
+    void OnAttack(Transform enemy)
+    {
+        RinoMove rinoMove = enemy.GetComponent<RinoMove>();
+        TurtleMove turtleMove = enemy.GetComponent<TurtleMove>();//다른클래스
+
+        //Point
+
+        //Reaction Force 
+        rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
+        //Enemy Die
+     
+       // rinoMove.OnDamagedforDie();
+
+        //turtleMove.OnDamagedforDie(); //외부에서이므로 enemy에서는 퍼블릭
+
+        
     }
 }

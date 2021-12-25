@@ -6,15 +6,19 @@ public class RinoMove : MonoBehaviour
 {
     //  public GameObject player;
     Transform target = null;
-    float enemyMoveSpeed = 4f;
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
+    CapsuleCollider2D capsulecollider;
+  
     public int nextmove;
+    float enemyMoveSpeed = 4f;
+
     // Start is called before the first frame update
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
+        capsulecollider = GetComponent<CapsuleCollider2D>();
        Invoke("Think", 5);
     }
 
@@ -23,10 +27,11 @@ public class RinoMove : MonoBehaviour
         //박스 콜라이더 내 플레이어 감지 된다면
         if (target != null)
         {
-            Vector2 dir = target.position - transform.position;
+            Vector2 dir = target.position - transform.position; 
             if (dir.x > 0) //플레이어가 라이노보다 앞이면
             {
                 spriteRenderer.flipX = true;
+                //이동시킴 
                 transform.Translate(dir.normalized * enemyMoveSpeed * Time.deltaTime);
 
             }
@@ -95,10 +100,26 @@ public class RinoMove : MonoBehaviour
         nextmove *= -1;
         spriteRenderer.flipX = nextmove == 1;
         CancelInvoke();
-       // Invoke("Think", 5);
+        //Invoke("Think", 5);
     }
-    
-    void Rush()
+
+    public void OnDamagedforDie()
     {
+       
+            //Sprite Alpha
+            spriteRenderer.color = new Color(1, 1, 1, 0.4f);
+            //Sprite Flip Y
+            spriteRenderer.flipY = true;
+            //Colider Disable
+            capsulecollider.enabled = false;
+            //Die Effect Jump
+            rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+            //Destroy 
+            Invoke("DeActive", 5);
+        
+    }
+    void DeActive()
+    {
+        gameObject.SetActive(false);
     }
 }

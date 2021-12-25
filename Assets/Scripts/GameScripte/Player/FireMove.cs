@@ -22,6 +22,10 @@ public class FireMove : MonoBehaviour
                 rigid.velocity = new Vector2(rigid.velocity.x, 5);
             }
         }
+        if(collision.gameObject.tag=="Enemy")
+        {
+            Destroy(gameObject);
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)

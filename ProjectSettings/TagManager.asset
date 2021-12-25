@@ -10,6 +10,7 @@ TagManager:
   - Fire
   - Border
   - Enemy
+  - TutleSpike
   layers:
   - Default
   - TransparentFX
