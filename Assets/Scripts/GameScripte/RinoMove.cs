@@ -6,7 +6,7 @@ public class RinoMove : MonoBehaviour
 {
     //  public GameObject player;
     Transform target = null;
-    float enemyMoveSpeed = 3f;
+    float enemyMoveSpeed = 4f;
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     public int nextmove;
@@ -15,15 +15,27 @@ public class RinoMove : MonoBehaviour
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-       // Invoke("Think", 5);
+       Invoke("Think", 5);
     }
 
     void Update()
     {
+        //박스 콜라이더 내 플레이어 감지 된다면
         if (target != null)
         {
             Vector2 dir = target.position - transform.position;
-            transform.Translate(dir.normalized * enemyMoveSpeed * Time.deltaTime);
+            if (dir.x > 0) //플레이어가 라이노보다 앞이면
+            {
+                spriteRenderer.flipX = true;
+                transform.Translate(dir.normalized * enemyMoveSpeed * Time.deltaTime);
+
+            }
+            else //나머지 
+            {
+                spriteRenderer.flipX = false;
+                transform.Translate(dir.normalized * enemyMoveSpeed * Time.deltaTime);
+
+            }
         }
     }
 
@@ -42,33 +54,24 @@ public class RinoMove : MonoBehaviour
 
        
 
-
-        //박치기 원리 잘모르겠음 
-        //Vector2 dir = (player.transform.position - transform.position).normalized;
-
-        //float acceleration = 2.5f;
-        //float velocity =  acceleration * Time.deltaTime;
-        //float distance = Vector3.Distance(player.transform.position, transform.position);
-
-        //if(distance <= 10.0f)
-        //{
-        //    transform.position = new Vector2(transform.position.x + (dir.x * velocity), transform.position.y);
-        //}
-
     }
-
+    //트리거에 플레어 들어오면 타겟에 플레이어 저장 
      void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.tag =="Player")
         {
             target=col.gameObject.transform;  //태그가 플레이어면 콜라이션의 게임오브젝트를 타겟에저장 
-            Debug.Log("target found");
+            Debug.Log("rino found target");
         }
     }
+
+    //트리거에 나가면 타겟을 비움.
     void OnTriggerExit2D(Collider2D col)
     {
         target = null;
-        Debug.Log("target lost");
+        CancelInvoke();
+        Think();
+        Debug.Log("rino lost target");
     }
    
 
@@ -92,7 +95,10 @@ public class RinoMove : MonoBehaviour
         nextmove *= -1;
         spriteRenderer.flipX = nextmove == 1;
         CancelInvoke();
-        Invoke("Think", 5);
+       // Invoke("Think", 5);
     }
     
+    void Rush()
+    {
+    }
 }
