@@ -6,6 +6,25 @@ public class GameManager : MonoBehaviour
 {
     // Start is called before the first frame update
     public int health;
+    public int stageIndex;
+    public PlayerMove Player;
+    public GameObject[] Stage;
+    public void NextStage()
+    {
+        if (stageIndex < Stage.Length - 1)
+        {
+            Stage[stageIndex].SetActive(false);
+            stageIndex++;
+            Stage[stageIndex].SetActive(true);
+            PlayerReposition();
+        }
+        else
+        {
+            Time.timeScale = 0;
+            Debug.Log("게임 클리어");
+        }
+
+    }
     void Start()
     {
         
@@ -26,5 +45,10 @@ public class GameManager : MonoBehaviour
             col.transform.position = new Vector3(0, 0, -1);
 
         }
+    }
+    void PlayerReposition()
+    {
+        Player.transform.position = new Vector3(0, 0, -1);
+        Player.VelocityZero();
     }
 }

@@ -112,6 +112,10 @@ public class PlayerMove : MonoBehaviour
         {
             AttackItem.SetActive(true);
         }
+      else if(collision.gameObject.tag=="Finish")
+        {
+            gameManager.NextStage();
+        }
     }
 
   
@@ -250,4 +254,10 @@ public class PlayerMove : MonoBehaviour
         }
         audioSource.Play();
     }
+
+    public void VelocityZero()
+    {
+        rigid.velocity = Vector2.zero;
+    }
+
 }
