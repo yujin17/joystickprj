@@ -7,9 +7,18 @@ public class PlayerMove : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     Animator anim;
+    AudioSource audioSource;
 
+    public GameManager gameManager;
     public GameObject AttackItem;
     public GameObject Fire;
+    public AudioClip audioJump;
+    public AudioClip audioAttack;
+    public AudioClip audioDamaged;
+    public AudioClip audioItem;
+    public AudioClip audioFinish;
+    public AudioClip audioDie;
+    
     public bool AttackMode=false;
     public int AttackCnt=0;
     public int FireFlipX = 1;
@@ -22,6 +31,7 @@ public class PlayerMove : MonoBehaviour
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -36,6 +46,7 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetButtonDown("Jump"))
         {
             PlayerJum();
+            PlaySound("JUMP");
         }
         //이동
         if (Input.GetButtonUp("Horizontal"))
@@ -133,6 +144,7 @@ public class PlayerMove : MonoBehaviour
             rigid.AddForce(Vector2.up * JumPow, ForceMode2D.Impulse);
         JumpCnt++;
         anim.SetBool("isJump", true);
+
     }
 
     void PlayerJumFall()
@@ -164,6 +176,10 @@ public class PlayerMove : MonoBehaviour
 
     void PlayerOnDamaged(Vector2 PlayerPos)
     {
+        //공격모드풀림
+        AttackMode = false;
+        //목숨감소
+        gameManager.health--;
         //change layer 
         gameObject.layer = 3;
         //view alpa
@@ -203,7 +219,35 @@ public class PlayerMove : MonoBehaviour
         //    rinoMove.OnDamagedforDie();
         //}
         //    //turtleMove.OnDamagedforDie(); 
+
+        PlaySound("ATTACK");
         
        
+    }
+
+    void PlaySound(string action)
+    {
+        switch(action)
+        {
+            case "JUMP":
+                audioSource.clip = audioJump;
+                break;
+            case "ATTACK":
+                audioSource.clip = audioAttack;
+                break;
+            case "DAMAGED":
+                audioSource.clip = audioDamaged;
+                break;
+            case "ITEM":
+                audioSource.clip = audioItem;
+                break;
+            case "DIE":
+                audioSource.clip = audioDie;
+                break;
+            case "FINISH":
+                audioSource.clip = audioJump;
+                break;
+        }
+        audioSource.Play();
     }
 }
