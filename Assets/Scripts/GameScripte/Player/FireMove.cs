@@ -26,6 +26,11 @@ public class FireMove : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        if(collision.gameObject.tag=="TutleSpike")
+        {
+            Destroy(gameObject);
+
+        }
     }
 
     void OnTriggerEnter2D(Collider2D collision)
@@ -33,6 +38,11 @@ public class FireMove : MonoBehaviour
         if(collision.gameObject.tag=="Border")
         {
             Destroy(gameObject);
+        }
+        if (collision.gameObject.tag == "TutleSpike")
+        {
+            Destroy(gameObject);
+            
         }
 
     }

@@ -60,8 +60,15 @@ public class RinoMove : MonoBehaviour
        
 
     }
+    private void OnCollisionEnter2D(Collision2D col)
+    {
+        if (col.gameObject.tag == "Fire")
+        {
+            OnDamagedforDie();
+        }
+    }
     //트리거에 플레어 들어오면 타겟에 플레이어 저장 
-     void OnTriggerEnter2D(Collider2D col)
+    void OnTriggerEnter2D(Collider2D col)
     {
         if(col.gameObject.tag =="Player")
         {
@@ -105,7 +112,8 @@ public class RinoMove : MonoBehaviour
 
     public void OnDamagedforDie()
     {
-       
+
+        Debug.Log("라이노죽기실행");
             //Sprite Alpha
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
             //Sprite Flip Y
@@ -122,4 +130,11 @@ public class RinoMove : MonoBehaviour
     {
         gameObject.SetActive(false);
     }
+
+
+    
+
+        //죽음조건2
+       
+    
 }

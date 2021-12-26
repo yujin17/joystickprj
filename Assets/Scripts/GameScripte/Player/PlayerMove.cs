@@ -194,16 +194,16 @@ public class PlayerMove : MonoBehaviour
         RinoMove rinoMove = enemy.GetComponent<RinoMove>();
         TurtleMove turtleMove = enemy.GetComponent<TurtleMove>();//다른클래스
 
-        //Point
 
         //Reaction Force 
         rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
         //Enemy Die
-     
-       // rinoMove.OnDamagedforDie();
-
-        //turtleMove.OnDamagedforDie(); //외부에서이므로 enemy에서는 퍼블릭
-
+        //if (enemy.tag == "Enemy")
+        //{
+        //    rinoMove.OnDamagedforDie();
+        //}
+        //    //turtleMove.OnDamagedforDie(); 
         
+       
     }
 }

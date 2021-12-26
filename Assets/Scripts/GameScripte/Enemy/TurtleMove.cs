@@ -10,7 +10,8 @@ public class TurtleMove : MonoBehaviour
     CapsuleCollider2D capsulecollider;
 
     public int nextmove;
-    public bool TutleSpikein=false;
+    public bool TutleSpikein = false;  // 
+    public int TutleStateCount = 1;   //1 가시 0 가시 없 
 
     //기본움직임, 맞으면 가시벗겨짐
     // Start is called before the first frame update
@@ -63,19 +64,20 @@ public class TurtleMove : MonoBehaviour
         // Invoke("Think", 5);
     }
 
-    private void OnCollisionEnter2D(Collision2D col)
+    public void OnCollisionEnter2D(Collision2D col)
     {
-       if(col.gameObject.tag =="Fire")
+     
+       //죽음조건2
+       if(col.gameObject.tag=="Fire"&&TutleSpikein)
         {
-            TutleSpikein = true;
-            gameObject.tag="Enemy";
-            anim.SetBool("SpikeIn", true);
+            OnDamagedforDie();
         }
     }
 
+    //죽음조건2
     public void OnDamagedforDie()
     {
-        if (TutleSpikein)
+        if (TutleSpikein && TutleStateCount==0)
         {
             //Sprite Alpha
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
@@ -87,6 +89,16 @@ public class TurtleMove : MonoBehaviour
             rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
             //Destroy 
             Invoke("DeActive", 5);
+        }
+    }
+    private void OnTriggerEnter2D(Collider2D col)
+    {
+     if(col.gameObject.tag=="Fire")
+        {
+            capsulecollider.enabled = false;
+            TutleSpikein = true;
+            gameObject.tag = "Enemy";
+            anim.SetBool("SpikeIn", true);
         }
     }
     void DeActive()
