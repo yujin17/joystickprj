@@ -4,25 +4,40 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    // Start is called before the first frame update
-    public AudioSource musicsource;
+     static public SoundManager instance;
 
+    public AudioClip[] soundclips;
 
+    private AudioSource source;
+
+    private WaitForSeconds waitTime = new WaitForSeconds(0.01f);
     public void Awake()
     {
-        
+
         //musicsource = backMusic.GetComponent<AudioSource>(); //배경음악 저장해둠
-        if (musicsource.isPlaying) return; //배경음악이 재생되고 있다면 패스
-        else
-        {
-            musicsource.Play();
-            DontDestroyOnLoad(musicsource); //배경음악 계속 재생하게(이후 버튼매니저에서 조작)
-        }
+        //if (instance!=null) //배경음악이 재생되고 있다면 패스
+        //{
+        //    Destroy(this.gameObject);
+        //}
+        //else
+        //{
+        //    DontDestroyOnLoad(this.gameObject);
+        //    instance = this;
+        //}
     }
 
-    public void SetMusicVolume(float volume)
+    public void Start()
     {
-        musicsource.volume = volume;
+        source = GetComponent<AudioSource>();
+    }
 
+    public void Play(int playMusicTrack)
+    {
+        source.clip = soundclips[playMusicTrack];
+        source.Play();
+    }
+    public void Stop()
+    {
+        source.Stop();
     }
 }

@@ -7,31 +7,34 @@ public class PlayerMove : MonoBehaviour
     Rigidbody2D rigid;
     SpriteRenderer spriteRenderer;
     Animator anim;
-    AudioSource audioSource;
 
     public GameManager gameManager;
     public GameObject AttackItem;
     public GameObject Fire;
-    public AudioClip audioJump;
-    public AudioClip audioAttack;
-    public AudioClip audioDamaged;
-    public AudioClip audioItem;
-    public AudioClip audioFinish;
-    public AudioClip audioDie;
-    
     public bool AttackMode=false;
     public int AttackCnt=0;
     public int FireFlipX = 1;
     public int Speed;
     public int JumPow;
     public int JumpCnt = 0;
-    // Start is called before the first frame update
+
+    //for UI
+    public bool move = true;
+    //for sound
+    SoundManager gameSound;
+    public int audioJump;
+    public int audioAttack;
+    public int audioDamaged;
+    public int audioItem;
+    public int audioFinish;
+    public int audioDie;
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
-        audioSource = GetComponent<AudioSource>();
+        gameSound = FindObjectOfType<SoundManager>();
     }
 
     // Update is called once per frame
@@ -45,8 +48,11 @@ public class PlayerMove : MonoBehaviour
         //점프
         if (Input.GetButtonDown("Jump"))
         {
-            PlayerJum();
-            PlaySound("JUMP");
+            if (move == true)
+            {
+                PlayerJum();
+                PlaySound("JUMP");
+            }
         }
         //이동
         if (Input.GetButtonUp("Horizontal"))
@@ -56,7 +62,10 @@ public class PlayerMove : MonoBehaviour
         //방향전환 
         if (Input.GetButton("Horizontal"))
         {
-            PlayerFilpX();
+            if (move == true)
+            {
+                PlayerFilpX();
+            }
         }
         //애나메이션
         if (rigid.velocity.normalized.x == 0)
@@ -97,6 +106,7 @@ public class PlayerMove : MonoBehaviour
         {
             AttackMode = true;
             Destroy(AttackItem);
+            PlaySound("ITEM");
         }
 
         //if(collision.gameObject.tag=="Enemy")
@@ -237,25 +247,25 @@ public class PlayerMove : MonoBehaviour
         switch(action)
         {
             case "JUMP":
-                audioSource.clip = audioJump;
+                gameSound.Play(audioJump); //효과음
                 break;
             case "ATTACK":
-                audioSource.clip = audioAttack;
+                gameSound.Play(audioAttack);
                 break;
             case "DAMAGED":
-                audioSource.clip = audioDamaged;
+                gameSound.Play(audioDamaged);
                 break;
             case "ITEM":
-                audioSource.clip = audioItem;
+                gameSound.Play(audioItem);
                 break;
             case "DIE":
-                audioSource.clip = audioDie;
+                gameSound.Play(audioDie);
                 break;
             case "FINISH":
-                audioSource.clip = audioJump;
+                gameSound.Play(audioFinish);
                 break;
         }
-        audioSource.Play();
+        //audioSource.Play();
 
     }
 

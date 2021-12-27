@@ -29,7 +29,7 @@ public class UI : MonoBehaviour
         pauseMenuUI.SetActive(true);
         Time.timeScale = 0f;
         GameObject.Find("Player").GetComponent<PlayerMove>().JumpCnt = 1;
-        //GameObject.Find("Player").GetComponent<PlayerMove>().flip = false;
+        GameObject.Find("Player").GetComponent<PlayerMove>().move = false;
     }
 
     public void OnClickClose()
@@ -38,7 +38,7 @@ public class UI : MonoBehaviour
         pauseButton.SetActive(true);
         Time.timeScale = 1f;
         GameObject.Find("Player").GetComponent<PlayerMove>().JumpCnt = 0;
-       // GameObject.Find("Player").GetComponent<PlayerMove>().flip = true;
+        GameObject.Find("Player").GetComponent<PlayerMove>().move = true;
 
     }
 
@@ -48,7 +48,7 @@ public class UI : MonoBehaviour
         pauseButton.SetActive(true);
         Time.timeScale = 1f;
         GameObject.Find("Player").GetComponent<PlayerMove>().JumpCnt = 0;
-      //  GameObject.Find("Player").GetComponent<PlayerMove>().flip = true;
+        GameObject.Find("Player").GetComponent<PlayerMove>().move = true;
 
     }
 
@@ -56,7 +56,7 @@ public class UI : MonoBehaviour
     {
         Time.timeScale = 1f;
         GameObject.Find("Player").GetComponent<PlayerMove>().JumpCnt = 0;
-      //  GameObject.Find("Player").GetComponent<PlayerMove>().flip = true;
+        GameObject.Find("Player").GetComponent<PlayerMove>().move = true;
         SceneManager.LoadScene("UIScene");
     }
 

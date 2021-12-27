@@ -20,4 +20,12 @@ public class Settings : MonoBehaviour
     {
         settingGams.SetActive(false);
     }
+
+    public void ChangeMusicVolume(float volume)
+    {
+        //audioSource.volume = volume;
+        BGMManager bgmManager = BGMManager.instance.GetComponent<BGMManager>();
+        bgmManager.SetMusicVolume(volume);
+
+    }
 }
