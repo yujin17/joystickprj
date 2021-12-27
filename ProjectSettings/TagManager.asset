@@ -11,6 +11,7 @@ TagManager:
   - Border
   - Enemy
   - TutleSpike
+  - TurtleEnemy
   layers:
   - Default
   - TransparentFX

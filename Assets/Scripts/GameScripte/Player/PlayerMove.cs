@@ -77,7 +77,7 @@ public class PlayerMove : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         //에너미 공격 
-        if (col.gameObject.tag == "Enemy")
+        if (col.gameObject.tag == "TurtleEnemy"||col.gameObject.tag=="Enemy")
         {
             if (rigid.velocity.y < 0 && transform.position.y > col.transform.position.y)
             {
@@ -218,12 +218,15 @@ public class PlayerMove : MonoBehaviour
         //Reaction Force 
         rigid.AddForce(Vector2.up * 10, ForceMode2D.Impulse);
         //Enemy Die
-        //if (enemy.tag == "Enemy")
-        //{
-        //    rinoMove.OnDamagedforDie();
-        //}
-        //    //turtleMove.OnDamagedforDie(); 
-
+        if (enemy.tag == "TurtleEnemy")
+        {
+            turtleMove.OnDamagedforDie();
+        }
+        else if(enemy.tag=="Enemy")
+        {
+            rinoMove.OnDamagedforDie();
+        }
+      
         PlaySound("ATTACK");
         
        
@@ -253,6 +256,7 @@ public class PlayerMove : MonoBehaviour
                 break;
         }
         audioSource.Play();
+
     }
 
     public void VelocityZero()

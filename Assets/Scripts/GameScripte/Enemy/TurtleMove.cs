@@ -77,7 +77,7 @@ public class TurtleMove : MonoBehaviour
     //Á×À½Á¶°Ç2
     public void OnDamagedforDie()
     {
-        if (TutleSpikein && TutleStateCount==0)
+        if (TutleSpikein)
         {
             //Sprite Alpha
             spriteRenderer.color = new Color(1, 1, 1, 0.4f);
@@ -97,7 +97,7 @@ public class TurtleMove : MonoBehaviour
         {
             capsulecollider.enabled = false;
             TutleSpikein = true;
-            gameObject.tag = "Enemy";
+            gameObject.tag = "TurtleEnemy";
             anim.SetBool("SpikeIn", true);
         }
     }
