@@ -77,7 +77,7 @@ public class PlayerMove : MonoBehaviour
     void OnCollisionEnter2D(Collision2D col)
     {
         //에너미 공격 
-        if (col.gameObject.tag == "TurtleEnemy"||col.gameObject.tag=="Enemy")
+        if (col.gameObject.tag == "TurtleEnemy"||col.gameObject.tag=="RinoEnemy"||col.gameObject.tag=="Enemy")
         {
             if (rigid.velocity.y < 0 && transform.position.y > col.transform.position.y)
             {
@@ -222,7 +222,7 @@ public class PlayerMove : MonoBehaviour
         {
             turtleMove.OnDamagedforDie();
         }
-        else if(enemy.tag=="Enemy")
+        else if(enemy.tag=="RinoEnemy")
         {
             rinoMove.OnDamagedforDie();
         }

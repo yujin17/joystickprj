@@ -22,14 +22,18 @@ public class FireMove : MonoBehaviour
                 rigid.velocity = new Vector2(rigid.velocity.x, 5);
             }
         }
-        if(collision.gameObject.tag=="Enemy")
+        else if(collision.gameObject.tag=="Enemy")
         {
             Destroy(gameObject);
         }
-        if(collision.gameObject.tag=="TutleSpike")
+        else if(collision.gameObject.tag=="TutleSpike")
         {
             Destroy(gameObject);
 
+        }
+        else if(collision.gameObject.tag=="TurtleEnemy")
+        {
+            Destroy(gameObject);
         }
     }
 
@@ -39,7 +43,7 @@ public class FireMove : MonoBehaviour
         {
             Destroy(gameObject);
         }
-        if (collision.gameObject.tag == "TutleSpike")
+        else if (collision.gameObject.tag == "TutleSpike")
         {
             Destroy(gameObject);
             

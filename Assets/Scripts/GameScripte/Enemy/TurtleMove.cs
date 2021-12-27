@@ -8,6 +8,7 @@ public class TurtleMove : MonoBehaviour
     SpriteRenderer spriteRenderer;
     Animator anim;
     CapsuleCollider2D capsulecollider;
+    BoxCollider2D boxcol;
 
     public int nextmove;
     public bool TutleSpikein = false;  // 
@@ -21,6 +22,7 @@ public class TurtleMove : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         capsulecollider = GetComponent<CapsuleCollider2D>();
+        boxcol = GetComponent<BoxCollider2D>();
         Invoke("Think", 5);
 
     }
@@ -95,7 +97,7 @@ public class TurtleMove : MonoBehaviour
     {
      if(col.gameObject.tag=="Fire")
         {
-            capsulecollider.enabled = false;
+            boxcol.enabled = false;
             TutleSpikein = true;
             gameObject.tag = "TurtleEnemy";
             anim.SetBool("SpikeIn", true);
