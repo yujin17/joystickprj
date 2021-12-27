@@ -11,8 +11,9 @@ public class TurtleMove : MonoBehaviour
     BoxCollider2D boxcol;
 
     public int nextmove;
-    public bool TutleSpikein = false;  // 
-    public int TutleStateCount = 1;   //1 가시 0 가시 없 
+    public bool TutleSpikein = false;  // 한대 맞았나 안맞았나 표시
+  
+    //  public int TutleStateCount = 1;   //1 가시 0 가시 없 
 
     //기본움직임, 맞으면 가시벗겨짐
     // Start is called before the first frame update
@@ -23,7 +24,8 @@ public class TurtleMove : MonoBehaviour
         anim = GetComponent<Animator>();
         capsulecollider = GetComponent<CapsuleCollider2D>();
         boxcol = GetComponent<BoxCollider2D>();
-        Invoke("Think", 5);
+
+        Think();
 
     }
 
@@ -63,7 +65,7 @@ public class TurtleMove : MonoBehaviour
         nextmove *= -1;
         spriteRenderer.flipX = nextmove == 1;
         CancelInvoke();
-        // Invoke("Think", 5);
+         Invoke("Think", 5);
     }
 
     public void OnCollisionEnter2D(Collision2D col)

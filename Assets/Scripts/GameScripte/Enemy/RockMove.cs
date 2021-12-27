@@ -2,24 +2,27 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class WPlant : MonoBehaviour
+public class RockMove : MonoBehaviour
 {
-    CapsuleCollider2D capsulecol;
     Rigidbody2D rigid;
-    SpriteRenderer spriterd;
+    CapsuleCollider2D capsulecol;
     Animator anim;
+    SpriteRenderer spriterd;
 
     public int nextmove;
     // Start is called before the first frame update
     void Awake()
     {
         rigid = GetComponent<Rigidbody2D>();
-        spriterd = GetComponent<SpriteRenderer>();
         capsulecol = GetComponent<CapsuleCollider2D>();
         anim = GetComponent<Animator>();
+        spriterd = GetComponent<SpriteRenderer>();
 
         Think();
     }
+
+    // Update is called once per frame
+    
     private void Update()
     {
         if (rigid.velocity.normalized.x == 0)
@@ -73,18 +76,18 @@ public class WPlant : MonoBehaviour
     //Á×À½¸ð¼Ç 
     public void OnDamagedforDie()
     {
-        
-            //Sprite Alpha
-            spriterd.color = new Color(1, 1, 1, 0.4f);
-            //Sprite Flip Y
-            spriterd.flipY = true;
-            //Colider Disable
-            capsulecol.enabled = false;
-            //Die Effect Jump
-            rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
-            //Destroy 
-            Invoke("DeActive", 5);
-        
+
+        //Sprite Alpha
+        spriterd.color = new Color(1, 1, 1, 0.4f);
+        //Sprite Flip Y
+        spriterd.flipY = true;
+        //Colider Disable
+        capsulecol.enabled = false;
+        //Die Effect Jump
+        rigid.AddForce(Vector2.up * 5, ForceMode2D.Impulse);
+        //Destroy 
+        Invoke("DeActive", 5);
+
     }
     void DeActive()
     {

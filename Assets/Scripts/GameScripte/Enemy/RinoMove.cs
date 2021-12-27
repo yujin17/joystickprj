@@ -89,6 +89,7 @@ public class RinoMove : MonoBehaviour
 
     void Think()
     {
+        
         //다음동작
         nextmove = Random.Range(-1, 2);
 
@@ -134,7 +135,7 @@ public class RinoMove : MonoBehaviour
 
     
 
-        //죽음조건2
+     
        
     
 }
